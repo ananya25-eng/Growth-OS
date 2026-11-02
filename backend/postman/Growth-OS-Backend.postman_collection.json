@@ -1,0 +1,41 @@
+{
+  "info": {
+    "_postman_id": "f5705a51-91b7-47a4-a246-5dc652c25c22",
+    "name": "Growth OS Backend API",
+    "description": "Test health, auth, achievement CRUD, skill CRUD and dashboard endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key":"baseUrl","value":"http://localhost:5000/api"},
+    {"key":"token","value":""},
+    {"key":"achievementId","value":""},
+    {"key":"skillId","value":""}
+  ],
+  "item": [
+    {"name":"Health","item":[
+      {"name":"Health check","request":{"method":"GET","url":"{{baseUrl}}/health"},"event":[{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Health returns 200', function () { pm.response.to.have.status(200); });"]}}]}
+    ]},
+    {"name":"Auth","item":[
+      {"name":"Register","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Student Name\",\n  \"email\": \"student@example.com\",\n  \"password\": \"StrongPass123\",\n  \"college\": \"Your University\",\n  \"course\": \"B.Tech CSE\",\n  \"year\": 2\n}"},"url":"{{baseUrl}}/auth/register"},"event":[{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Register returns success or existing account', function () { pm.expect([201, 409]).to.include(pm.response.code); });","if (pm.response.code === 201) pm.collectionVariables.set('token', pm.response.json().token);"]}}]},
+      {"name":"Login","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"email\": \"student@example.com\",\n  \"password\": \"StrongPass123\"\n}"},"url":"{{baseUrl}}/auth/login"},"event":[{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Login returns 200', function () { pm.response.to.have.status(200); });","pm.collectionVariables.set('token', pm.response.json().token);"]}}]},
+      {"name":"Current user","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"GET","url":"{{baseUrl}}/auth/me"}}
+    ]},
+    {"name":"Achievements","item":[
+      {"name":"Create","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Web Development Project\",\n  \"category\": \"Project\",\n  \"description\": \"Built a responsive student growth website.\",\n  \"status\": \"Completed\",\n  \"tags\": [\"HTML\", \"CSS\", \"JavaScript\"]\n}"},"url":"{{baseUrl}}/achievements"},"event":[{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Achievement created', function () { pm.response.to.have.status(201); });","pm.collectionVariables.set('achievementId', pm.response.json().achievement._id);"]}}]},
+      {"name":"List","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"GET","url":"{{baseUrl}}/achievements?page=1&limit=20"}},
+      {"name":"Read by ID","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"GET","url":"{{baseUrl}}/achievements/{{achievementId}}"}},
+      {"name":"Update","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"description\": \"Updated from Postman.\",\n  \"status\": \"Completed\"\n}"},"url":"{{baseUrl}}/achievements/{{achievementId}}"}},
+      {"name":"Delete","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"DELETE","url":"{{baseUrl}}/achievements/{{achievementId}}"}}
+    ]},
+    {"name":"Skills","item":[
+      {"name":"Create","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"JavaScript\",\n  \"category\": \"Technical\",\n  \"proficiency\": 70,\n  \"level\": \"Intermediate\"\n}"},"url":"{{baseUrl}}/skills"},"event":[{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Skill created', function () { pm.response.to.have.status(201); });","pm.collectionVariables.set('skillId', pm.response.json().skill._id);"]}}]},
+      {"name":"List","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"GET","url":"{{baseUrl}}/skills"}},
+      {"name":"Read by ID","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"GET","url":"{{baseUrl}}/skills/{{skillId}}"}},
+      {"name":"Update","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"proficiency\": 85,\n  \"level\": \"Advanced\"\n}"},"url":"{{baseUrl}}/skills/{{skillId}}"}},
+      {"name":"Delete","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"DELETE","url":"{{baseUrl}}/skills/{{skillId}}"}}
+    ]},
+    {"name":"Dashboard","item":[
+      {"name":"Overview","request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{token}}","type":"string"}]},"method":"GET","url":"{{baseUrl}}/dashboard/overview"}}
+    ]}
+  ]
+}
