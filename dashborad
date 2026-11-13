@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Growth OS</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<header class="dash-nav">
+
+    <a href="index.html" class="logo">
+        <span class="logo-icon">G</span>
+        Growth OS
+    </a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#goals">My Goals</a>
+        <a href="#habits">Habits</a>
+    </nav>
+
+    <div class="nav-user">
+        <span id="userInitial">G</span>
+        <button id="logoutButton">Logout ↗</button>
+    </div>
+
+</header>
+
+<main class="dashboard">
+
+    <section class="welcome">
+        <div>
+            <span class="eyebrow">YOUR PERSONAL GROWTH SPACE</span>
+            <h1>Welcome back, <span id="userName">there</span>!</h1>
+            <p>Small steps every day lead to meaningful progress.</p>
+        </div>
+
+        <div class="date-card">
+            <span>TODAY</span>
+            <strong id="todayDate"></strong>
+        </div>
+    </section>
+
+    <section class="stats-grid">
+
+        <article class="stat-card">
+            <span>Total Goals</span>
+            <strong id="totalGoals">0</strong>
+            <small>Goals you're working towards</small>
+        </article>
+
+        <article class="stat-card">
+            <span>Completed Goals</span>
+            <strong id="completedGoals">0</strong>
+            <small>Every achievement counts</small>
+        </article>
+
+        <article class="stat-card">
+            <span>Habits Completed</span>
+            <strong id="completedHabits">0</strong>
+            <small>Keep building consistency</small>
+        </article>
+
+    </section>
+
+    <section class="content-grid">
+
+        <article class="panel" id="goals">
+
+            <div class="panel-heading">
+                <div>
+                    <span class="eyebrow">YOUR AMBITIONS</span>
+                    <h2>My Goals</h2>
+                </div>
+            </div>
+
+            <form id="goalForm" class="inline-form">
+
+                <input
+                    type="text"
+                    id="goalTitle"
+                    placeholder="Enter a new goal"
+                    maxlength="70"
+                    required
+                >
+
+                <input type="date" id="goalDate">
+
+                <button type="submit">+ Add Goal</button>
+
+            </form>
+
+            <p class="form-hint" id="goalMessage"></p>
+
+            <div id="goalList" class="item-list"></div>
+
+        </article>
+
+        <article class="panel" id="habits">
+
+            <div class="panel-heading">
+                <div>
+                    <span class="eyebrow">DAILY ROUTINE</span>
+                    <h2>My Habits</h2>
+                </div>
+            </div>
+
+            <form id="habitForm" class="inline-form">
+
+                <input
+                    type="text"
+                    id="habitTitle"
+                    placeholder="Enter a new habit"
+                    maxlength="60"
+                    required
+                >
+
+                <button type="submit">+ Add Habit</button>
+
+            </form>
+
+            <p class="form-hint" id="habitMessage"></p>
+
+            <div id="habitList" class="item-list"></div>
+
+        </article>
+
+    </section>
+
+    <p class="dashboard-note">
+        Your progress is saved automatically.
+    </p>
+
+</main>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
